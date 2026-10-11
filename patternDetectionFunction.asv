@@ -1,0 +1,102 @@
+function patternDetection(signal, SnR)
+
+%Plot original signal
+
+figure(1)
+
+stem(signal)
+xlabel sample
+ylabel amplitude
+title('Input Signal');
+
+%Create a noisy signal from this signal
+
+signal_awgn = awgn(signal,SnR);
+
+figure(2)
+
+stem(signal_awgn)
+xlabel sample
+ylabel amplitude
+title('Noisy Input Signal');
+
+%Find the autocorrelation of the noisy signal
+
+[autocorrelation, lag] = xcorr(signal_awgn);
+
+figure(3)
+
+plot(lag,autocorrelation)
+xlabel sample
+ylabel amplitude
+title('Autocorrelation Function of Input Signal');
+
+%Smooth out the data to create strict local maxima
+
+smooth_peaks = smoothdata(autocorrelation);
+
+
+%Find the position of peaks within the autocorrelation to find where the
+%signal has a pattern
+
+%Peaks and positions for maxima
+
+[positive_peaks, positive_lags] = findpeaks(smooth_peaks);
+
+%Peaks and positions for minima
+
+[negative_peaks, negative_lags] = findpeaks(-smooth_peaks);
+
+
+%plot the values of correlation and where these samples occur
+
+figure(4)
+stem(positive_lags,positive_peaks)
+ylabel correlation
+xlabel sample
+title('Autocorrelation peaks');
+
+hold on;
+
+stem(negative_lags,-negative_peaks, 'red')
+
+hold off;
+
+[autocorrelation2, lag2] = xcorr(smooth_peaks);
+
+
+figure(5)
+
+plot(lag2,autocorrelation2)
+xlabel sample
+ylabel amplitude
+title('Auto-correlation of auto-correlation function');
+
+end
+
+%Function to concatenate a signal N number of times with a wait of W samples in between each message, 
+% will be used to create sequences to be detected in the patternDetect()
+% function
+
+function output = repeatSignal(signal, N, W)
+
+    output = zeros(size(signal)*N);
+
+    for loop = 1:N
+
+        
+        output(,loop*N) = signal;
+        push(output,zeros(W));
+
+
+    end
+end
+
+
+clear all;
+clc;
+clf;
+
+input = [1,0,1,1,0];
+
+input2 = repeatSignal(input,3,0)
