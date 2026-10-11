@@ -1,0 +1,83 @@
+%Clear figures, command line and the workspace
+
+clf;
+clc;
+clear all;
+
+%Number of sin cycles in signal
+
+N = 20;
+
+%Number of samples of the signal
+
+points = 1000;
+
+%points vector (go from 0 to 2pi*NumberOfCycles in how ever many points)
+
+x = linspace(0,N*2*pi,points);
+
+%Create signal given points
+
+y = sin(x);
+
+%Plot original signal
+
+figure(1)
+
+plot(y)
+xlabel sample
+ylabel amplitude
+
+%Define a signal to noise ratio for the noisy signal
+
+snr = 0.05;
+
+%Create a noisy signal from this signal
+
+y_awgn = awgn(y,snr);
+
+figure(2)
+
+plot(y_awgn)
+xlabel sample
+ylabel amplitude
+
+%Find the autocorrelation of the noisy signal
+
+[autocorrelation, lag] = xcorr(y_awgn);
+
+figure(3)
+
+plot(lag,autocorrelation)
+xlabel sample
+ylabel amplitude
+
+%Smooth out the data to create strict local maxima
+
+smooth_peaks = smoothdata(autocorrelation);
+
+
+%Find the position of peaks within the autocorrelation to find where the
+%signal has a pattern
+
+%Peaks and positions for maxima
+
+[positive_peaks, positive_lags] = findpeaks(smooth_peaks);
+
+%Peaks and positions for minima
+
+[negative_peaks, negative_lags] = findpeaks(-smooth_peaks);
+
+
+%plot the values of correlation and where these samples occur
+
+figure(4)
+stem(positive_lags,positive_peaks)
+ylabel correlation
+xlabel sample
+
+hold on;
+
+stem(negative_lags,-negative_peaks, 'red')
+
+hold off;

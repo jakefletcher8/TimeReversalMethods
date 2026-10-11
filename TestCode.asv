@@ -1,0 +1,61 @@
+t = (1:0.1:100);
+
+Signal = sin(2*pi*t);
+
+%Signal to noise ratio
+
+snr = 20;
+
+%Add Additive White Gaussian Noise to the signal 
+
+output = awgn(Signal, snr);
+
+%Plot the output
+
+plot(t,output)
+xlabel 'Time (s)';
+ylabel 
+%% 
+
+
+%hold on
+
+%Find transfer function of the channel
+
+channelTransfer = ifft(fft(output)./fft(Signal));
+
+plot(channelTransfer)
+
+%Flip the signal in time and plot the result
+
+timereversal = flip(ifft(fft(output)./fft(channelTransfer)));
+
+plot(t,timereversal)
+
+%Convolve the time reversed signal with the channel's transfer functio
+
+finalSignal = ifft(fft(timereversal).*fft(flip(channelTransfer)));
+
+%Plot final signal
+
+plot(finalSignal)
+
+hold on
+
+plot(Signal,"red");
+
+%Find the magnitude squared transfer function
+
+channelSquared = ifft((fft(channelTransfer)).^2);
+
+expectedSignal = ifft(fft(channelSquared).*fft(Signal));
+
+clf
+
+plot(channelSquared,"green")
+
+
+
+
+
+
