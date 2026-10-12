@@ -10,4 +10,14 @@ plateColumns = 10;
 
 plate = zeros(plateRows,plateColumns);
 
+%Place the receiver at some arbitrary position on the plate
+
+receiverRow = 1;
+receiverColumn = 1;
+
+%Place the target at some arbitrary position on the plate
+
+targetRow = 6;
+targetColumn = 5;
+
 
