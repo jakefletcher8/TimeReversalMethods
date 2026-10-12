@@ -20,4 +20,17 @@ receiverColumn = 1;
 targetRow = 6;
 targetColumn = 5;
 
+%Set receiver position in matrix to R and target position to T
 
+plate(receiverRow,receiverColumn) = -1;
+
+plate(targetRow,targetColumn) = 1;
+
+%Find absolute distance between target and receiver
+
+distanceRow = receiverRow - targetRow;
+distanceColumn = receiverColumn - targetColumn;
+
+%Absolute distance
+
+radius = sqrt(distanceRow^2 + distanceColumn^2);
