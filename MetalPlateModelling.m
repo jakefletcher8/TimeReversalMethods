@@ -34,3 +34,10 @@ distanceColumn = receiverColumn - targetColumn;
 %Absolute distance
 
 radius = sqrt(distanceRow^2 + distanceColumn^2);
+
+%To do: 
+%
+%Create an attenuation function dependant on distance propagated
+%along the metal plate.
+%
+%Put metal plate things into a custom struct/object and give it functions
