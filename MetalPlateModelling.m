@@ -3,37 +3,37 @@
 %Stephan said the imaging method only works for rectangular geometry, if
 %given time and enough motivation investigate other shaped materials 
 
-plateRows = 10;
-plateColumns = 10;
+plate.rows = 10;
+plate.columns = 10;
 
 %Create an empty matrix of positions
 
-plate = zeros(plateRows,plateColumns);
+plate = zeros(plate.rows,plate.columns);
 
 %Place the receiver at some arbitrary position on the plate
 
-receiverRow = 1;
-receiverColumn = 1;
+receiver.row = 1;
+receiver.column = 1;
 
 %Place the target at some arbitrary position on the plate
 
-targetRow = 6;
-targetColumn = 5;
+target.row = 6;
+target.column = 5;
 
 %Set receiver position in matrix to R and target position to T
 
-plate(receiverRow,receiverColumn) = -1;
+plate(receiver.row,receiver.column) = -1;
 
-plate(targetRow,targetColumn) = 1;
+plate(target.row,target.column) = 1;
 
 %Find absolute distance between target and receiver
 
-distanceRow = receiverRow - targetRow;
-distanceColumn = receiverColumn - targetColumn;
+distance.row = receiver.row - target.row;
+distance.column = receiver.column - target.column;
 
 %Absolute distance
 
-radius = sqrt(distanceRow^2 + distanceColumn^2);
+radius = sqrt(distance.row^2 + distance.column^2);
 
 %To do: 
 %
@@ -41,3 +41,4 @@ radius = sqrt(distanceRow^2 + distanceColumn^2);
 %along the metal plate.
 %
 %Put metal plate things into a custom struct/object and give it functions
+
