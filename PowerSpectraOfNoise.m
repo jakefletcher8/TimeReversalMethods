@@ -10,17 +10,21 @@ fs = 1000;
 
 f = 100;
 
+%Amplitude of signal
+
+A = 0.1;
+
 %Time vector
 
 t = (0:1/fs:1 -1/fs);
 
 %Signal 
 
-y = cos(2*pi*f*t);
+y = A*cos(2*pi*f*t);
 
 %Noise signal 
 
-noise = randn(1,fs);
+noise = A*randn(1,fs);
 
 figure(1)
 
@@ -96,3 +100,27 @@ ylabel 'Magnitude'
 title 'Frequency Spectra of Noisy Signal'
 
 figure(4)
+
+psd_noise = noise_f.^2;
+psd_noise = 2.*psd_noise(1:fs/2);
+
+psd_awgn = awgn_f.^2;
+psd_awgn = 2.*psd_awgn(1:fs/2);
+
+subplot(2,1,1)
+
+plot(freq,pow2db(psd_noise))
+
+xlabel 'Frequency (Hz)'
+ylabel 'Power (dB)'
+
+title 'Power Spectral Density of Noise'
+
+subplot(2,1,2)
+
+plot(freq,pow2db(psd_awgn))
+
+xlabel 'Frequency (Hz)'
+ylabel 'Power (dB)'
+
+title 'Power Spectral Density of AWGN'
