@@ -1,3 +1,4 @@
+%% 
 %Clear plots
 
 clf;
@@ -12,7 +13,9 @@ f = 100;
 
 %Amplitude of signal
 
-A = 0.1;
+A = 0.0002;
+
+AN = 0.0001;
 
 %Time vector
 
@@ -20,11 +23,14 @@ t = (0:1/fs:1 -1/fs);
 
 %Signal 
 
-y = A*cos(2*pi*f*t);
+y = A*square(2*pi*f*t);
+
+y(1:200) = 0;
+y(400:end) = 0;
 
 %Noise signal 
 
-noise = A*randn(1,fs);
+noise = AN*randn(1,fs);
 
 figure(1)
 
