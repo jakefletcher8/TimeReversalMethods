@@ -130,3 +130,5 @@ xlabel 'Frequency (Hz)'
 ylabel 'Power (dB)'
 
 title 'Power Spectral Density of AWGN'
+
+acousticRoomResponse

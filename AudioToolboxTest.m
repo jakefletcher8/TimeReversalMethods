@@ -89,7 +89,11 @@ y_time_reversed = fliplr(y_rec);
 
 y_back = conv(irRT,y_time_reversed);
 
+y_back = cat(2,y_back,y_back);
 
+y_back = cat(2,y_back,y_back);
+
+y_back = cat(2,y_back,y_back);
 
 %Plot both of these signals to see what it is like
 
