@@ -301,7 +301,7 @@ plot(sent_back) %[output:83aa243b]
 %[appendix]{"version":"1.0"}
 %---
 %[metadata:view]
-%   data: {"layout":"hidecode"}
+%   data: {"layout":"onright"}
 %---
 %[control:slider:2c64]
 %   data: {"defaultValue":100,"label":"N","max":10000,"min":100,"run":"Nothing","runOn":"ValueChanging","step":10}
