@@ -19,7 +19,8 @@ function animation = PlateHeatMap(signal, width, height, frames, N, impulse_row,
 
 %Generate noise with time being frames long
 
-noise = randn(height,width,frames);
+noise = zeros(height,width,frames);
+% noise = randn(height,width,frames);
 
 %Generate x vector
 
@@ -116,7 +117,7 @@ for frame = (1:1:frames)
 
             %Set the corresponding value equal to 1
 
-            if (frame+sample) < frames
+            if (frame+sample) < frames && (acousticWave.magnitudes(component) > 0)
 
             working_matrix(row,column,frame+(sample-1)) = working_matrix(row,column,frame+(sample-1)) + signal(sample)*acousticWave.magnitudes(component);
 
@@ -129,6 +130,12 @@ for frame = (1:1:frames)
         if (round(acousticWave.yposition(component)) >= height) || (round(acousticWave.yposition(component)) <= 0)
 
             acousticWave.ydirections(component) = -acousticWave.ydirections(component);
+            
+            if acousticWave.magnitudes(component) > 0
+
+            acousticWave.magnitudes(component) = acousticWave.magnitudes(component) - 0.5;
+
+            end
 
         end
 
@@ -138,6 +145,12 @@ for frame = (1:1:frames)
         if (round(acousticWave.xposition(component)) >= width) || (round(acousticWave.xposition(component)) <= 0)
 
             acousticWave.xdirections(component) = -acousticWave.xdirections(component);
+
+            if acousticWave.magnitudes(component) > 0
+
+            acousticWave.magnitudes(component) = acousticWave.magnitudes(component) - 0.5;
+
+            end
 
         end
 
@@ -193,11 +206,12 @@ map.EdgeColor = "interp";
 
 xlim([0 width]);
 ylim([0 height]);
-zlim([-frames frames]);
+zlim([min(AWGN_signal,[],'all') max(AWGN_signal,[],'all')]);
 
 ylabel 'Y Axis'
 xlabel 'X Axis'
 zlabel 'Magnitude'
+clim([min(signal),max(signal)])
 title("Acoustic Signal Animation")
 
 colorbar
